@@ -3,31 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 
-    class BestFit
+class BestFit
+{
+    float[,] SetSlope(int x, int y, int size)
     {
-    float[,] SetSlope(float[,] calc)
-    {
-        Random ran = new Random();
-        int size = ran.Next(10, 30);
+
+        string path = "test.txt";
+        StreamReader reader = new StreamReader(path);
+        int XSize = Convert.ToInt32(reader.ReadLine());
+        int YSize = Convert.ToInt32(reader.ReadLine());
+
+        double[,] TerrainData = new double[XSize, YSize];
+
+
+        for(int i = 0; i <XSize;i++)
+        {
+            for (int j = 0; j < YSize; j++)
+            {
+                TerrainData[i, j] = Convert.ToDouble(reader.ReadLine());
+            }
+
+        }
+        reader.Close();
+        float[,] ToMod = new float[size, size];
+
+        int Xiteration = 0;
+        int Yiteration = 0;
+
+        for (int i = x; i < x + size; i++)
+        {
+            for (int j = y; i < y + size; j++)
+            {
+                ToMod[Xiteration, Yiteration] = (float)TerrainData[i, j];
+                Yiteration++;
+            }
+            Xiteration++;
+        }
+
         //setting handed array to a changeable array
 
-
-        float[,] ToMod = calc;
 
         //Arrays to contain the X,Y and Z of each point
         Double[] Xmod = new double[ToMod.Length];
         Double[] Ymod = new double[ToMod.Length];
         Double[] Zmod = new double[ToMod.Length];
 
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                ToMod[i, j] = (float)ran.NextDouble();
-            }
-        }
 
         int lengthComp = 0;
 
@@ -69,7 +92,7 @@ using System.Threading.Tasks;
 
         int iterator = 0;
         //one dimentional array to contain new Z points
-        double[] NewZ = new double[100];
+        double[] NewZ = new double[size*size];
 
         //Uses found sum of AX + BY + C = Z and sets into array
         for (int i = 0; i < size; i++)
@@ -83,9 +106,9 @@ using System.Threading.Tasks;
 
         iterator = 0;
         //rearranges new points back into original array to be returned
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < size; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < size; j++)
             {
                 ToMod[i, j] = (float)NewZ[iterator];
                 iterator++;
