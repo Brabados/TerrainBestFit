@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BestFitTest\**" />
+    <EmbeddedResource Remove="BestFitTest\**" />
+    <None Remove="BestFitTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Accord.Math" Version="3.8.0" />
   </ItemGroup>
 

@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 using System.IO;
 
 
-class BestFit
+public class BestFit
 {
-    float[,] SetSlope(int x, int y, int size)
+    public float[,] SetSlope(int x, int y, int size)
     {
 
-        string path = "test.txt";
+        
+        string path = "ArrayOfZ.txt";
         StreamReader reader = new StreamReader(path);
         int XSize = Convert.ToInt32(reader.ReadLine());
         int YSize = Convert.ToInt32(reader.ReadLine());
+
+        if(x >= XSize - size || y>= YSize -size)
+        {
+            return null;
+        }
 
         double[,] TerrainData = new double[XSize, YSize];
 
@@ -35,11 +41,12 @@ class BestFit
 
         for (int i = x; i < x + size; i++)
         {
-            for (int j = y; i < y + size; j++)
+            for (int j = y; j < y + size; j++)
             {
                 ToMod[Xiteration, Yiteration] = (float)TerrainData[i, j];
                 Yiteration++;
             }
+            Yiteration = 0;
             Xiteration++;
         }
 
